@@ -1,5 +1,7 @@
 package book
 
+import "gorm.io/gorm"
+
 type GenreType string
 
 const (
@@ -10,6 +12,7 @@ const (
 )
 
 type Book struct {
+	gorm.Model
 	ID     int
 	Name   string
 	Genre  GenreType
