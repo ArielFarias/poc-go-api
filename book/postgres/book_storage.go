@@ -24,5 +24,13 @@ func (r *BookPostgreSQL) Get(id int) (book.Book, error) {
 }
 
 func (r *BookPostgreSQL) GetAll() ([]book.Book, error) {
-	return []book.Book{}, nil
+	var books = []book.Book{
+		{
+			Name:   "O Guia do Mochileiro das Galaxias",
+			Genre:  book.ScienceFiction,
+			Author: "Douglas Adams",
+		},
+	}
+
+	return books, nil
 }
