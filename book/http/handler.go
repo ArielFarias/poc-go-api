@@ -7,14 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Handlers(s book.UseCase) *gin.Engine {
+func Handlers(s *book.Service) *gin.Engine {
 	r := gin.Default()
 	r.GET("/health", healthHandler)
 	r.Handle("GET", "/", getBooks(s))
 	return r
 }
 
-func getBooks(s book.UseCase) gin.HandlerFunc {
+func getBooks(s *book.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		books, err := s.GetAll()
 		if err != nil {
