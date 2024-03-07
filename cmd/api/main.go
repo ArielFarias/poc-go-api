@@ -1,13 +1,24 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+
+	"github.com/ArielFarias/poc-go-api/book"
+	"github.com/ArielFarias/poc-go-api/book/api"
+	gin "github.com/ArielFarias/poc-go-api/book/http"
+	repository "github.com/ArielFarias/poc-go-api/book/postgres"
+	"github.com/ArielFarias/poc-go-api/datasource"
+)
 
 func main() {
-	router := gin.New()
+	db := datasource.Connect()
+	r := repository.NewBookPostgreSQL(&db)
+	s := book.NewService(r)
+	h := gin.Handlers(s)
 
-	router.GET("/", func(context *gin.Context) {
-		context.String(200, "Hello World!")
-	})
+	err := api.Start("8080", h)
 
-	router.Run(":8080")
+	if err != nil {
+		log.Fatalf("error running api: %s", err)
+	}
 }
